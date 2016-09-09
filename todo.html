@@ -4,6 +4,12 @@
 	<title>To Do List</title>	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<style>
+		body {
+			width: 90vw;
+			margin: 0 auto;
+		}
+	</style>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 	<script>
 		var model = {
@@ -13,13 +19,18 @@
 					{ action: "Collect Tickets", done: true },
 					{ action: "Call Joe", done: false }]
 		};
-
+		
 		var todoApp = angular.module("todoApp", []);
+
+		todoApp.controller("ToDoCtrl", function ($scope) {
+			$scope.todo = model;
+		});
 	</script>
 </head>
-<body>
+<body ng-controller="ToDoCtrl">
 	<div class="page-header">
-		<h1>To Do List</h1>
+		<h1>{{ todo.user }}'s To Do List</h1>
+		<span class="label label-default">{{todo.items.length}}</span>
 	</div>
 	<div class="panel">
 		<div class="input-group">
@@ -35,7 +46,11 @@
 					<th>Done</th>
 				</tr>
 			</thead>
-			<tbody>				
+			<tbody>
+				<tr ng-repeat="item in todo.items">
+					<td>{{item.action}}</td>
+					<td>{{item.done}}</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
